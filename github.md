@@ -55,7 +55,7 @@ To link to a webpage: [cool link](https://www.thingiverse.com/)
 
 ### Images
 
-
+To add an image: ![My Dog](IMG_8575.jpg)
 
 ### Quotes
 
