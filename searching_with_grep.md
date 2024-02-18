@@ -44,7 +44,7 @@ This is not really what I want because I just wanted to return the title, not th
 ![image](https://github.com/caitepley/SYSLIB2024/assets/148588703/986e79f8-6695-4561-82a0-b7524d594638)
 This is just the titles, which is what I wanted.
 
-## Year Published
+### Year Published
 The next thing I wanted to do was find a count of the years that the articles in the file were published. This could be interesting to see how far back research on galaxy clusters using Python goes. I was hopeful that this line would work, `grep -Eio "year =[0-9]*" scopus_galaxy.bib | sort | uniq -c` , but it returned this:
 ![image](https://github.com/caitepley/SYSLIB2024/assets/148588703/4a63c09c-a219-46d8-9e0f-7d612ee7cc79)
 
