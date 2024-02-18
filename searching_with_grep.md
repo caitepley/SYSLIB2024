@@ -7,6 +7,8 @@ there this week.
 
 ## Uploading Data
 I could not get the scopus.bib file transferred using the command from the text/lecture, so I used the alternative method instead. I exported the data that I wanted from Scopus, added it to this git repo (under scopus.bib), 
-and then used `wget` with the URL of the data on github. This worked great.
+and then used `wget` with the URL of the data on github. This worked great. 
+
+Once I was done following along with the example from the lecture, I added a new sc
 
 ## grep Commands
