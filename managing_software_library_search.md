@@ -54,6 +54,13 @@ To open `yaz`, run the command `yaz-client` in the terminal. You know it worked 
 **Connect to UK's OPAC**: To actually be able to query anything, `yaz` needs to be connected to a library OPAC. To connect to UK's, run the command `open saalck-uky.alma.exlibrisgroup.com:1921/01SAA_UKY
 `
 
-**Queries:** Queries in `yaz` are written using Prefix Query Notation (PQN). 
+**Queries:** Queries in `yaz` are written using Prefix Query Notation (PQN). These are queries where the operator (AND, OR, NOT) comes before the search terms. 
 
+The documentation for the commands are listed in the **user manual** for `yaz-client`. 
 
+### Example Query
+**Query** `f @attr 1=21 "astronomy"` - finds documents that have the term 'astronomy' in their subject headings.
+
+**Query** with an **AND** statement `f @and @attr 1=1016 "physics" @attr 1=1016 "python"` - finds any documents in the OPAC that contain the terms 'physics' **and** 'python' in any of their fields.
+
+**Note:** in the search queries the term 1=## (for example, 1=21) denotes which fields the query is looking at. 1=21 searches subject headings and 1=1016 searches all fields. 
