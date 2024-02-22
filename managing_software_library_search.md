@@ -35,3 +35,25 @@ Once the package was installed, the command `batcat example.txt` was used to cre
 This is pretty cool because it shows file contents (like the `cat` command) but with the formatting and line numbers you would see if you opened the file in a text editor. 
 
 ## Library Search
+`yaz-client` - serves as a gateway to information retrieval using the Z39.50 protocol.
+
+**Z39.50 protocol** -  standard protocol in libraries for sharing, querying, and retrieving bibliographic information between library databases.
+
+### Installing Yaz
+To search for the software, first run the `apt search yaz` command, which will display all of the packages that have 'yaz' in the name. Then, to make sure that the package is what we need to install, run the command `apt show yaz` to show the specifics for the package. This is the package we need, so then the command `sudo apt install yaz` is ran to install the package onto the local machine. 
+
+### Documentation for the Yaz Package
+**User manual** for `yaz` - run command `man yaz-client` - this opens the file that contains the user manual for the software. Documentation is also available at 
+[yaz documentation](https://www.indexdata.com/resources/software/yaz/)
+
+**Attribute documentation** for `yaz` - run command `man bib1-attr` - this opens the file that contains the documentation for the attributes of `yaz`.
+
+### Use Yaz and/or Perform Queries
+To open `yaz`, run the command `yaz-client` in the terminal. You know it worked correctly if you see `Z>` in the terminal window. 
+
+**Connect to UK's OPAC**: To actually be able to query anything, `yaz` needs to be connected to a library OPAC. To connect to UK's, run the command `open saalck-uky.alma.exlibrisgroup.com:1921/01SAA_UKY
+`
+
+**Queries:** Queries in `yaz` are written using Prefix Query Notation (PQN). 
+
+
