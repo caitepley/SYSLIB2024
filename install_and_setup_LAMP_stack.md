@@ -38,6 +38,20 @@ Search the local IP address using the command `ip a`, then run `w3m <IP address>
 Use the server's public IP address from the gcloud console (the VM's IP address) to be able to show the web page in a web browser.
 Like above, run `w3m <IP address>`
 
+**To create a new web page:**
+
+To create a new file besides the default one, you can create an HTML file on your local machine, under the /var/www/html directory. Then, to access the web page in a browser, you need to specify the IP address and then the file name.
+
+Ex:
+```
+cd ~
+cd /var/www/html
+sudo nano example.html
+```
+Once you have the file open in VIM, you can add whatever HTML you want. Then to view the file in a browser, use the command
+```
+http://<Private IP address>/example.html
+```
 
 ## Part 2: Installing & Configuring PHP
 
