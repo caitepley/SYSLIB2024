@@ -118,3 +118,149 @@ http://<VM's IP Address>
 Since the configuration has been changed, it will show the browser detector, rather than the HTML that was at this address initially.
 
 ## Part 3: Installing & Configuring MySQL
+### Install & Set Up MySQL
+Install:
+`sudo apt install mysql-server`
+Check status:
+`systemctl status mysql`
+Perform security checks:
+`sudo mysql_secure_installation`
+Respond to prompts like this:
+```
+Remove anonymous users: Y
+Disallow root login remotely: Y
+Remove test database and access to it: Y
+Reload privilege tables now: Y
+```
+Log in to the database to test it. For this, we have to become the root Linux user, like this:
+`sudo su`
+
+**Note: we need to be careful when we enter commands on the command line, because it's a largely unforgiving computing environment. But we need to be especially careful when we are logged in as the Linux root user. This user can delete anything, including files that the system needs in order to boot and operate.**
+
+#### Login to MySQL:
+Connect to MySQL server as the root user:
+`mysql -u root`
+`show databases`
+To exit:
+`\q`
+
+The databases should look like this:
+![image](https://github.com/caitepley/SYSLIB2024/assets/148588703/1514370e-f421-4d2c-8ea2-676ad3f0329a)
+**Note: If we are logging into the root database account as the root Linux user, we don't need to enter our password.**
+
+### Create & Set Up a Regular User Account
+`create user 'opacuser'@'localhost' identified by 'XXXXXXXXX';`
+Should return a **Query OK** message.
+
+### Create a Practice Database
+```
+create database opacdb;
+grant all privileges on opacdb.* to 'opacuser'@'localhost';
+show databases;
+```
+To exit the root Linux user account:
+```
+\q
+exit
+```
+### Logging in as Regular User and Creating Tables
+Run:
+`mysql -u opacuser -p`
+This will prompt you to enter the password set in **Create & Set Up a Regular User Account**
+
+Show the available databases:
+```
+show databases;
+use opacdb;
+```
+It should return something like this:
+![image](https://github.com/caitepley/SYSLIB2024/assets/148588703/f0618fa1-f4df-4ac1-ad2a-3fb468b3c664)
+
+#### Create a table in **opacdb** called **books**
+```
+create table books (
+id int unsigned not null auto_increment,
+author varchar(150) not null,
+title varchar(150) not null,
+copyright date not null,
+primary key (id)
+);
+```
+
+Confirm that the table was created:
+```
+show tables;
+describe books;
+```
+It should look like this:
+![image](https://github.com/caitepley/SYSLIB2024/assets/148588703/e9c82c2b-2c84-465a-bfc7-535fd9cae603)
+
+#### Adding Records into the Table
+Use SQL syntax to add records to the table.
+Ex:
+```
+insert into books (author, title, copyright) values
+('Jennifer Egan', 'The Candy House', '2022-04-05'),
+('Imbolo Mbue', 'How Beautiful We Were', '2021-03-09'),
+('Lydia Millet', 'A Children\'s Bible', '2020-05-12'),
+('Julia Phillips', 'Disappearing Earth', '2019-05-14');
+```
+View the records:
+`Select * from books;`
+
+#### SQL Commands
+**retrieve some records or parts of records:**
+Ex: `select title from books;`
+Ex: `select title from books where author = 'Stephen King';`
+
+**delete a record:**
+Ex: `delete from books where publisher = 'Baker & Taylor';`
+
+**alter the table structure so that it will hold more data**
+Ex: `alter table books add publisher varchar(75) after title;`
+
+**add a record:**
+Ex: `insert into books
+(author, title, publisher, copyright) values
+('Emma Donoghue', 'Room', 'Little, Brown \& Company', '2010-08-06');`
+
+### Install PHP and MySQL Support
+Install PHP support for MySQL:
+`sudo apt install php-mysql php-mysqli`
+
+restart Apache2 and MySql:
+```
+sudo systemctl restart apache2
+sudo systemctl restart mysql
+```
+
+#### Create PHP Scripts
+Create a login.php file in /var/www/html:
+```
+cd /var/www/html/
+sudo touch login.php
+sudo chmod 640 login.php
+sudo chown :www-data login.php
+ls -l login.php
+sudo nano login.php
+```
+Add the credentials to the file:
+```
+<?php // login.php
+$db_hostname = "localhost";
+$db_database = "opacdb";
+$db_username = "opacuser";
+$db_password = "XXXXXXXXX";
+?>
+```
+
+Create OPAC file:
+`sudo nano opac.php`
+Add the code from the class text to the file to display the results of some SQL queries related to the OPAC that was created earlier. Save it and exit nano.
+
+**Test Syntax:**
+```
+sudo php -f login.php
+sudo php -f opac.php
+```
+This will show the line location of any syntax errors that are caught.
