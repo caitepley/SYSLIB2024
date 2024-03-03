@@ -35,7 +35,7 @@ Run `w3m 127.0.0.1` OR `w3m localhost`
 Search the local IP address using the command `ip a`, then run `w3m <IP address>`
 
 **Run web page in regular web browser**
-Use the server's public IP address from the gcloud console (the VM's IP address) to be able to show the web page in a web browser.
+Use the server's public IP address from the gcloud console (**the VM's IP address**) to be able to show the web page in a web browser.
 Like above, run `w3m <IP address>`
 
 **To create a new web page:**
@@ -54,5 +54,67 @@ http://<Private IP address>/example.html
 ```
 
 ## Part 2: Installing & Configuring PHP
+PHP is a server-side programming language, which means it must be installed on the server. So, this means that PHP has be installed on a server, but it must also be configured to work with the HTTP server (Apache2).
+
+### To Install PHP:
+```
+sudo apt install php libapache2-mod-php
+sudo systemctl restart apache2
+```
+To check for errors:
+`systemctl status apache2`
+
+## To Check Install:
+Create a file called info.php:
+```
+cd /var/www/html/
+sudo nano info.php
+```
+Add this to the file:
+```
+<?php
+phpinfo();
+?>
+```
+Visit the file using the VM's IP address:
+`http://<IP address>/info.php`
+
+The page should look like this:
+![image](https://github.com/caitepley/SYSLIB2024/assets/148588703/eff4dad1-2c82-4a6a-9b84-4a3f5e13a988)
+
+**NOTE: use http NOT https when viewing the web pages here
+
+### Basic Configurations
+Goal: have Apache2 default to a file titled index.php 
+Need to edit the **dir.conf** file in the **/etc/apache2/mods-enabled/** directory.
+#### Create a copy of the file as a backup before editing, like so:
+```
+cd /etc/apache2/mods-enabled/
+sudo cp dir.conf dir.conf.bak
+sudo nano dir.conf
+```
+Change the line in the file to this:
+`DirectoryIndex index.php index.html index.cgi index.pl index.xhtml index.htm`
+
+#### Test the configuration
+`apachectl configtest`
+**NOTE:* returns "Syntax Ok" if you did it correctly
+
+#### Reload and Restart Apache2:
+```
+sudo systemctl reload apache2
+sudo systemctl restart apache2
+```
+### Create an index.php File
+Create the file:
+```
+cd /var/www/html/
+sudo nano index.php
+```
+The code in the file is available in the class text. It works as a browser detector; i.e. it will tell you what browser you are using to run the script.
+
+Once the file is saved, you can run it in the browser by typing this into the browser:
+http://<VM's IP Address>
+Since the configuration has been changed, it will show the browser detector, rather than the HTML that was at this address initially.
 
 ## Part 3: Installing & Configuring MySQL
